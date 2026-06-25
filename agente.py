@@ -4,6 +4,7 @@ import sqlite3
 import pandas as pd
 from dotenv import load_dotenv
 from anthropic import Anthropic
+import unicodedata
 
 from esquema import ESQUEMA
 
@@ -36,11 +37,17 @@ Devolve SOLO el SQL, sin explicaciones ni formato markdown."""
     )
     return limpiar_sql(respuesta.content[0].text)
 
+def sin_tildes(texto):
+    if texto is None:
+        return None
+    return (unicodedata.normalize("NFKD", str(texto))
+            .encode("ascii", "ignore").decode("ascii").lower())
 
 def ejecutar_sql(sql):
     if not sql.strip().lower().startswith("select"):
         raise ValueError("Solo se permiten consultas SELECT(de lectura).")
     conn = sqlite3.connect(DB)
+    conn.create_function("sin_tildes", 1, sin_tildes)
     resultado = pd.read_sql_query(sql,conn)
     conn.close()
     return resultado

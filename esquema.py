@@ -1,4 +1,11 @@
 ESQUEMA = """
+REGLA IMPORTANTE PARA FILTRAR TEXTO:
+Para comparar columnas de texto (cultivo, provincia, departamento), usá SIEMPRE
+la función sin_tildes() en AMBOS lados (ignora tildes y mayúsculas).
+Correcto:   WHERE sin_tildes(cultivo) = sin_tildes('maiz')
+Correcto:   WHERE sin_tildes(provincia) = sin_tildes('cordoba')
+Evitá comparar texto directo como WHERE cultivo = 'maíz'.
+
 Tabla: estimaciones
 Columnas:
 - cultivo (texto): nombre del cultivo, ej 'soja total', 'maíz', 'trigo total'
