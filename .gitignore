@@ -1,0 +1,19 @@
+# Secretos - NUNCA subir a GitHub
+.env
+
+# Entorno virtual de Python
+venv/
+
+# Cache de Python
+__pycache__/
+*.pyc
+
+# Datos crudos/procesados (grandes y redescargables) - ver README para reproducir
+data/
+
+# Bases de datos, EXCEPTO agro.db (la app la necesita)
+*.db
+!agro.db
+
+# Mac
+.DS_Store
