@@ -5,6 +5,7 @@ la función sin_tildes() en AMBOS lados (ignora tildes y mayúsculas).
 Correcto:   WHERE sin_tildes(cultivo) = sin_tildes('maiz')
 Correcto:   WHERE sin_tildes(provincia) = sin_tildes('cordoba')
 Evitá comparar texto directo como WHERE cultivo = 'maíz'.
+Esto también aplica dentro de IN: usá sin_tildes(cultivo) IN (sin_tildes('soja total'), sin_tildes('maiz'), sin_tildes('trigo total')).
 
 Tabla: estimaciones
 Columnas:
@@ -19,6 +20,11 @@ Columnas:
 - superficie_cosechada_ha (entero): hectáreas cosechadas
 - produccion_tm (entero): producción en toneladas
 - rendimiento_kgxha (entero): rendimiento en kg por hectárea
+
+NOTA sobre estimaciones: cada fila es a nivel DEPARTAMENTO. TODAS las filas tienen
+departamento_id (nunca es NULL) y NO existen filas de totales nacionales o provinciales.
+Para totales por provincia o país, usá SUM()/AVG() con GROUP BY.
+NUNCA filtres por "departamento_id IS NULL".
 
 Tabla: clima
 Columnas:
